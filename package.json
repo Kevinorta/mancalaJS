@@ -1,7 +1,7 @@
 {
-  "name": "nodetest",
+  "name": "mancala",
   "version": "1.0.0",
-  "description": "",
+  "description": "A websockets and node.js mancala game",
   "main": "server.js",
   "dependencies": {
     "bufferutil": "3.0.0",
@@ -15,6 +15,14 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "Kevin Orta",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kevinorta/mancalaJS.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Kevinorta/mancalaJS/issues"
+  },
+  "homepage": "https://github.com/Kevinorta/mancalaJS#readme"
 }

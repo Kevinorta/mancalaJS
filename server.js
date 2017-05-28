@@ -31,4 +31,4 @@ var server = ws.createServer(function (conn) {
         console.log("Connection closed")
     })
 
-}).listen(2345)
+}).listen(process.env.PORT || 5000)

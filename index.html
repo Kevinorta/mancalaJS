@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Pusher Test</title>
+
+    <link rel="stylesheet" href="stylesheet.css" type="text/css">
+    <script src="mancala.js"></script>
+    <script src="https://js.pusher.com/4.0/pusher.min.js"></script>
+    <script>
+        //    var socket = new WebSocket("ws://localhost:2345")
+        //    socket.onopen = function (event) {
+        //      socket.send("Can you hear me?"); 
+        //    };
+        //    socket.onmessage = function (event) {
+        //      
+        //        if (event.data.includes("name")){
+        //            var username= prompt(event.data)
+        //            
+        //            console.log("welcome "+username)
+        //        }else{
+        //            //add to log
+        //            console.log(event.data)
+        //            var log=document.getElementById("log").innerHTML;
+        //            document.getElementById("log").innerHTML= log+"<br>"+event.data
+        //        }
+        //    }
+        //
+        //    function send(){
+        //        socket.send("msg "+document.getElementById("msg").value)
+        //    }
+        //    
+        //
+
+    </script>
+</head>
+
+<body>
+    <p id="log"></p>
+    <input type="text" id="msg"></input>
+    <input type="button" value="Send" onclick="send()"></input>
+
+    <body>
+        <div id="game">
+            <table>
+                <tr>
+                    <td rowspan="2" id="b14">0</td>
+                    <td onclick="p2(13)" id="b13">4</td>
+                    <td onclick="p2(12)" id="b12">4</td>
+                    <td onclick="p2(11)" id="b11">4</td>
+                    <td onclick="p2(10)" id="b10">4</td>
+                    <td onclick="p2(9)" id="b9">4</td>
+                    <td onclick="p2(8)" id="b8">4</td>
+                    <td rowspan="2" id="b7">0</td>
+                </tr>
+                <tr>
+                    <td onclick="p1(1)" id="b1">4</td>
+                    <td onclick="p1(2)" id="b2">4</td>
+                    <td onclick="p1(3)" id="b3">4</td>
+                    <td onclick="p1(4)" id="b4">4</td>
+                    <td onclick="p1(5)" id="b5">4</td>
+                    <td onclick="p1(6)" id="b6">4</td>
+                </tr>
+            </table>
+        </div>
+    </body>

@@ -31,14 +31,14 @@ wss.on('connection', (ws) => {
     }
 
 
-    ws.on('message', function incoming(str) {
+    ws.on('message', function incoming(message) {
         //        console.log('received: %s', message);
-        if (str.includes("msg ")) {
+        if (message.includes("msg ")) {
 
             wss.clients.forEach(function each(client) {
-                if (client.readyState === SocketServer.OPEN) {
-                    client.send(str.substring('msg '.length));
-                }
+
+                client.send(str.substring('msg '.length));
+
             });
 
         }

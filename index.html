@@ -11,7 +11,7 @@
 
 
         //WS1
-        var socket = new WebSocket("ws://localhost:3000");
+        var socket = new WebSocket(HOST);
         socket.onopen = function(event) {
             socket.send("Can you hear me?");
         };

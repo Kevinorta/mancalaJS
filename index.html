@@ -13,10 +13,10 @@
         //WS1
         var socket = new WebSocket(HOST);
         socket.onopen = function(event) {
-            socket.send("Can you hear me?");
+
         };
         socket.onmessage = function(event) {
-            alert("SOMETHING WORKS")
+
             if (event.data.includes("name")) {
                 var username = prompt(event.data);
 

@@ -32,16 +32,24 @@ wss.on('connection', (ws) => {
 
 
     ws.on('message', function incoming(message) {
-        //        console.log('received: %s', message);
-        if (message.includes("msg ")) {
 
-            wss.clients.forEach(function each(client) {
+        console.log('received: %s', message);
 
-                client.send(str.substring('msg '.length));
+        wss.clients.forEach(function each(client) {
 
-            });
+            client.send(message.substring('msg '.length));
 
-        }
+        });
+
+        //        if (message.includes("msg ")) {
+        //
+        //            wss.clients.forEach(function each(client) {
+        //
+        //                client.send(str.substring('msg '.length));
+        //
+        //            });
+        //
+        //        }
     });
 
 

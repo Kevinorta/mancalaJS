@@ -5,7 +5,7 @@ const SocketServer = require('ws').Server;
 const path = require('path');
 
 const PORT = process.env.PORT || 3000;
-const INDEX = path.join(__dirname, 'index.html');
+const INDEX = path.join(__dirname, '/index.html');
 
 const server = express()
     .use((req, res) => res.sendFile(INDEX))
@@ -22,20 +22,21 @@ global.clients = [];
 console.log("HELLO");
 wss.on('connection', (ws) => {
     console.log('Client connected');
+    ws.send("You have connected")
     clients[global.player] = ws;
     if (player == 1) {
         player++;
     } else {
-        clients[1].sendText("Player two has joined you")
+        clients[1].send("Player two has joined you")
     }
 
 
     ws.on('message', function incoming(str) {
-        console.log('received: %s', message);
+        //        console.log('received: %s', message);
         if (str.includes("msg ")) {
 
             wss.clients.forEach(function each(client) {
-                if (client.readyState === WebSocket.OPEN) {
+                if (client.readyState === SocketServer.OPEN) {
                     client.send(str.substring('msg '.length));
                 }
             });
@@ -44,7 +45,7 @@ wss.on('connection', (ws) => {
     });
 
 
-    ws.on('close', () => console.log('Client disconnected'));
+
 });
 
 

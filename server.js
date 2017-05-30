@@ -25,9 +25,11 @@ wss.on('connection', (ws) => {
     ws.send("You have connected")
     clients[global.player] = ws;
     if (player == 1) {
+        ws.send("player: 1")
         player++;
     } else {
         clients[1].send("Player two has joined you")
+        clients[2].send("player: 2")
     }
 
 
@@ -35,12 +37,20 @@ wss.on('connection', (ws) => {
 
         console.log('received: %s', message);
 
-        wss.clients.forEach(function each(client) {
+        if (message.includes("move:")) {
 
-            client.send(message.substring('msg '.length));
+            wss.clients.forEach(function each(client) {
 
-        });
+                client.send(message);
 
+            });
+        } else if (message.includes("msg")) {
+            wss.clients.forEach(function each(client) {
+
+                client.send(message.substring('msg '.length));
+
+            });
+        }
         //        if (message.includes("msg ")) {
         //
         //            wss.clients.forEach(function each(client) {

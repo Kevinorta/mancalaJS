@@ -28,9 +28,35 @@
         };
         socket.onmessage = function(event) {
 
-            if (event.data.includes("name")) {
-                var username = prompt(event.data);
+            if (event.data.includes("player:")) {
+                player = event.data.substring('player: '.length)
+                console.log("you are player " + player)
+                if (player == "1") {
+                    document.getElementById("b8").onclick = ""
+                    document.getElementById("b9").onclick = ""
+                    document.getElementById("b10").onclick = ""
+                    document.getElementById("b11").onclick = ""
+                    document.getElementById("b12").onclick = ""
+                    document.getElementById("b13").onclick = ""
+                } else {
+                    document.getElementById("b1").onclick = ""
+                    document.getElementById("b2").onclick = ""
+                    document.getElementById("b3").onclick = ""
+                    document.getElementById("b4").onclick = ""
+                    document.getElementById("b5").onclick = ""
+                    document.getElementById("b6").onclick = ""
+                }
+            }
 
+            if (event.data.includes("move:")) {
+                if (event.data.substring(0, 1) == "1") {
+                    p1(event.data.substring(6))
+                } else {
+                    p2(event.data.substring(6))
+                }
+
+            } else if (event.data.includes("name")) {
+                var username = prompt(event.data);
                 console.log("welcome " + username);
             } else {
                 //add to log
@@ -38,6 +64,7 @@
                 var log = document.getElementById("log").innerHTML;
                 document.getElementById("log").innerHTML = log + "<br>" + event.data;
             }
+
         };
 
         function send() {
@@ -45,156 +72,200 @@
             socket.send("msg " + document.getElementById("msg").value);
         }
 
+        function findOpposite() {
+            if (spotNum == 1) {
+                opposite = 13;
+            } else if (spotNum == 2) {
+                opposite = 12;
+            } else if (spotNum == 3) {
+                opposite = 11;
+            } else if (spotNum == 4) {
+                opposite = 10;
+            } else if (spotNum == 5) {
+                opposite = 9;
+            } else if (spotNum == 6) {
+                opposite = 8;
+            } else if (spotNum == 8) {
+                opposite = 6;
+            } else if (spotNum == 9) {
+                opposite = 5;
+            } else if (spotNum == 10) {
+                opposite = 4;
+            } else if (spotNum == 11) {
+                opposite = 3;
+            } else if (spotNum == 12) {
+                opposite = 2;
+            } else if (spotNum == 13) {
+                opposite = 1;
+            }
+        }
+
+        function checkWin() {
+//            alert("check win")
+            if ((document.getElementById("b1").innerHTML == 0 && document.getElementById("b2").innerHTML == 0 && document.getElementById("b3").innerHTML == 0 && document.getElementById("b4").innerHTML == 0 && document.getElementById("b5").innerHTML == 0 && document.getElementById("b6").innerHTML == 0) ||
+                (document.getElementById("b8").innerHTML == 0 && document.getElementById("b9").innerHTML == 0 && document.getElementById("b10").innerHTML == 0 && document.getElementById("b11").innerHTML == 0 && document.getElementById("b12").innerHTML == 0 && document.getElementById("b13").innerHTML == 0)) {
+//                alert("wempt")
+                if (document.getElementById("b6").innerHTML > document.getElementById("b14").innerHTML) {
+                    alert("p1 win")
+                }
+            }
+        }
 
 
+        function codeAddress() {
+            turn = "player 1";
+            emptyme = 0;
+            turnsame = 0;
+        }
+        window.onload = codeAddress;
 
 
-        //function codeAddress() {
-        //    turn = "player 1";
-        //    emptyme = 0;
-        //    turnsame = 0;
-        //}
-        //window.onload = codeAddress;
-        //
-        //
-        //function p1(num) {
-        //    moves = document.getElementById("b" + num).innerHTML
-        //    if (turn == "player 1" && moves > 0) {
-        //        // alert(turn)
-        //        remainingMoves = moves;
-        //        console.log(moves)
-        //        spotNum = num.toString()
-        //        // alert(spotNum);
-        //        moves = document.getElementById("b" + num).innerHTML
-        //        old = document.getElementById("b" + num).innerHTML
-        //        while (moves > 0) {
-        //            spotNum++
-        //            if (spotNum > 13) {
-        //                spotNum = 1
-        //            }
-        //            if (moves == 1 && document.getElementById("b" + spotNum).innerHTML == 0 && spotNum > 0 && spotNum < 7) {
-        //                alert("empty");
-        //                added = 1;
-        //                if (spotNum == 1) {
-        //                    opposite = 13;
-        //                } else if (spotNum == 2) {
-        //                    opposite = 12;
-        //                } else if (spotNum == 3) {
-        //                    opposite = 11;
-        //                } else if (spotNum == 4) {
-        //                    opposite = 10;
-        //                } else if (spotNum == 5) {
-        //                    opposite = 9;
-        //                } else if (spotNum == 6) {
-        //                    opposite = 8;
-        //                }
-        //                added = added + Number(document.getElementById("b" + opposite).innerHTML)
-        //                document.getElementById("b" + opposite).innerHTML = 0;
-        //
-        //                document.getElementById("b7").innerHTML = Number(document.getElementById("b7").innerHTML) + added
-        //                document.getElementById("b" + spotNum).innerHTML = 0;
-        //                emptyme = 1;
-        //
-        //            }
-        //            document.getElementById("b" + spotNum).innerHTML = Number(document.getElementById("b" + spotNum).innerHTML) + 1;
-        //            if (emptyme == 1) {
-        //
-        //                document.getElementById("b" + spotNum).innerHTML = 0;
-        //            }
-        //            emptyme = 0;
-        //
-        //            if (moves == 1 && spotNum == 7) {
-        //                turnsame = 1;
-        //                alert("again")
-        //            }
-        //
-        //            moves--
-        //
-        //
-        //        }
-        //        document.getElementById("b" + num).innerHTML = document.getElementById("b" + num).innerHTML - old;
-        //    } else if (turn == "player 2") {
-        //        alert("its not ur turn fam");
-        //    } else {
-        //        alert("you got no turns, go again");
-        //    }
-        //    if (turnsame == 0) {
-        //        alert("player 2 turn")
-        //        turn = "player 2"
-        //    } else {
-        //        alert("its player 1 again")
-        //        turn = "player 1";
-        //        // turnsame=
-        //    }
-        //
-        //
-        //}
-        //
-        //function p2(num) {
-        //    moves = document.getElementById("b" + num).innerHTML
-        //    if (turn == "player 2" && moves > 0) {
-        //        // alert(turn)
-        //        remainingMoves = moves;
-        //        console.log(moves);
-        //        spotNum = num.toString();
-        //        // alert(spotNum);
-        //        moves = document.getElementById("b" + num).innerHTML;
-        //        old = document.getElementById("b" + num).innerHTML;
-        //
-        //        while (moves > 0) {
-        //            spotNum++
-        //            if (spotNum > 14) {
-        //                spotNum = 1
-        //            }
-        //            if (spotNum == 7) {
-        //                spotNum = 8
-        //            }
-        //            if (moves == 1 && document.getElementById("b" + spotNum).innerHTML == 0 && spotNum > 7 && spotNum < 14) {
-        //                alert("empty");
-        //                added = 1;
-        //                if (spotNum == 8) {
-        //                    opposite = 6;
-        //                } else if (spotNum == 9) {
-        //                    opposite = 5;
-        //                } else if (spotNum == 10) {
-        //                    opposite = 4;
-        //                } else if (spotNum == 11) {
-        //                    opposite = 3;
-        //                } else if (spotNum == 12) {
-        //                    opposite = 2;
-        //                } else if (spotNum == 13) {
-        //                    opposite = 1;
-        //                }
-        //                added = added + Number(document.getElementById("b" + opposite).innerHTML)
-        //                document.getElementById("b" + opposite).innerHTML = 0;
-        //
-        //                document.getElementById("b14").innerHTML = Number(document.getElementById("b14").innerHTML) + added
-        //                document.getElementById("b" + spotNum).innerHTML = 0;
-        //                emptyme = 1;
-        //
-        //            }
-        //
-        //
-        //            document.getElementById("b" + spotNum).innerHTML = Number(document.getElementById("b" + spotNum).innerHTML) + 1;
-        //            if (emptyme == 1) {
-        //
-        //                document.getElementById("b" + spotNum).innerHTML = 0;
-        //            }
-        //
-        //            emptyme = 0;
-        //            moves--
-        //        }
-        //        document.getElementById("b" + num).innerHTML = 0;
-        //    } else if (turn == "player 1") {
-        //        alert("its not ur turn fam");
-        //    } else {
-        //        alert("you got no turns, go again");
-        //    }
-        //
-        //    turn = "player 1";
-        //
-        //
-        //}
+        function p1(num) {
+            moves = document.getElementById("b" + num).innerHTML
+            turnsame = 0;
+            if (turn == "player 1" && moves > 0) {
+                // alert(turn)
+                remainingMoves = moves;
+                console.log(moves)
+                spotNum = num.toString()
+                // alert(spotNum);
+                moves = document.getElementById("b" + num).innerHTML
+                old = document.getElementById("b" + num).innerHTML
+                while (moves > 0) {
+                    spotNum++
+                    if (spotNum > 13) {
+                        spotNum = 1
+                    }
+                    if (moves == 1 && document.getElementById("b" + spotNum).innerHTML == 0 && spotNum > 0 && spotNum < 7) {
+//                        alert("empty");
+                        added = 1;
+
+                        findOpposite();
+
+                        added = added + Number(document.getElementById("b" + opposite).innerHTML)
+                        document.getElementById("b" + opposite).innerHTML = 0;
+
+                        document.getElementById("b7").innerHTML = Number(document.getElementById("b7").innerHTML) + added
+                        document.getElementById("b" + spotNum).innerHTML = 0;
+                        emptyme = 1;
+
+                    }
+                    document.getElementById("b" + spotNum).innerHTML = Number(document.getElementById("b" + spotNum).innerHTML) + 1;
+                    if (emptyme == 1) {
+
+                        document.getElementById("b" + spotNum).innerHTML = 0;
+                    }
+                    emptyme = 0;
+
+                    if (moves == 1 && spotNum == 7) {
+                        console.log(spotNum)
+                        turnsame = 1;
+//                        alert("again")
+                    }
+
+                    moves--
+
+
+                }
+                document.getElementById("b" + num).innerHTML = document.getElementById("b" + num).innerHTML - old;
+            } else if (turn == "player 2") {
+                alert("its not ur turn fam");
+            } else {
+                alert("you got no turns, go again");
+                turnsame = 1;
+            }
+            if (turnsame == 0) {
+                alert("player 2 turn")
+                turn = "player 2"
+                document.getElementById("turn").innerHTML = "Player 2"
+                document.getElementById("turn").style.color = "blue"
+            } else {
+                alert("its player 1 again")
+                turn = "player 1";
+                // turnsame=
+            }
+            checkWin();
+
+        }
+
+        function p2(num) {
+            moves = document.getElementById("b" + num).innerHTML
+            turnsame = 0;
+            if (turn == "player 2" && moves > 0) {
+                // alert(turn)
+                remainingMoves = moves;
+                console.log(moves);
+                spotNum = num.toString();
+                // alert(spotNum);
+                moves = document.getElementById("b" + num).innerHTML;
+                old = document.getElementById("b" + num).innerHTML;
+
+                while (moves > 0) {
+                    spotNum++
+
+                    //move to other row
+                    if (spotNum > 14) {
+                        spotNum = 1
+                    }
+                    if (spotNum == 7) {
+                        spotNum = 8
+                    }
+
+
+                    //empty hole; opposite add pot
+                    if (moves == 1 && document.getElementById("b" + spotNum).innerHTML == 0 && spotNum > 7 && spotNum < 14) {
+                        alert("empty");
+                        added = 1;
+                        findOpposite();
+                        added = added + Number(document.getElementById("b" + opposite).innerHTML)
+                        document.getElementById("b" + opposite).innerHTML = 0;
+
+                        document.getElementById("b14").innerHTML = Number(document.getElementById("b14").innerHTML) + added
+                        document.getElementById("b" + spotNum).innerHTML = 0;
+                        document.getElementById("b" + opposite).innerHTML = 0;
+                        emptyme = 1; //set pot to be emptied
+
+                    }
+
+
+                    document.getElementById("b" + spotNum).innerHTML = Number(document.getElementById("b" + spotNum).innerHTML) + 1; // add to pot
+
+                    //empties out pots
+                    if (emptyme == 1) {
+                        document.getElementById("b" + spotNum).innerHTML = 0;
+                        document.getElementById("b" + opposite).innerHTML = 0;
+                    }
+                    emptyme = 0
+                    if (moves == 1 && spotNum == 14) {
+                        console.log(spotNum)
+                        turnsame = 1;
+                        alert("again")
+                    }
+                    moves--
+                }
+                document.getElementById("b" + num).innerHTML = 0; //empty first pot
+
+            } else if (turn == "player 1") {
+                alert("its not ur turn fam");
+            } else {
+                alert("Empty, go again");
+                turnsame = 1;
+            }
+
+
+            if (turnsame == 0) {
+                alert("player 1 turn")
+                turn = "player 1";
+                document.getElementById("turn").innerHTML = "Player 1"
+                document.getElementById("turn").style.color = "red"
+            } else {
+                alert("its player 2 again")
+                turn = "player 2";
+            }
+
+            checkWin();
+
+        }
 
     </script>
     <script src="https://js.pusher.com/4.0/pusher.min.js"></script>
@@ -208,25 +279,26 @@
     <input type="button" value="Send" onclick="send()"></input>
 
     <body>
+        <h1 id="turn" color="red">player 1</h1>
         <div id="game">
             <table>
                 <tr>
                     <td rowspan="2" id="b14">0</td>
-                    <td onclick="p2(13)" id="b13">4</td>
-                    <td onclick="p2(12)" id="b12">4</td>
-                    <td onclick="p2(11)" id="b11">4</td>
-                    <td onclick="p2(10)" id="b10">4</td>
-                    <td onclick="p2(9)" id="b9">4</td>
-                    <td onclick="p2(8)" id="b8">4</td>
+                    <td onclick="socket.send('2move:13')" id="b13">4</td>
+                    <td onclick="socket.send('2move:12')" id="b12">4</td>
+                    <td onclick="socket.send('2move:11')" id="b11">4</td>
+                    <td onclick="socket.send('2move:10')" id="b10">4</td>
+                    <td onclick="socket.send('2move:9')" id="b9">4</td>
+                    <td onclick="socket.send('2move:8')" id="b8">4</td>
                     <td rowspan="2" id="b7">0</td>
                 </tr>
                 <tr>
-                    <td onclick="p1(1)" id="b1">4</td>
-                    <td onclick="p1(2)" id="b2">4</td>
-                    <td onclick="p1(3)" id="b3">4</td>
-                    <td onclick="p1(4)" id="b4">4</td>
-                    <td onclick="p1(5)" id="b5">4</td>
-                    <td onclick="p1(6)" id="b6">4</td>
+                    <td onclick="socket.send('1move:1')" id="b1">4</td>
+                    <td onclick="socket.send('1move:2')" id="b2">4</td>
+                    <td onclick="socket.send('1move:3')" id="b3">4</td>
+                    <td onclick="socket.send('1move:4')" id="b4">4</td>
+                    <td onclick="socket.send('1move:5')" id="b5">4</td>
+                    <td onclick="socket.send('1move:6')" id="b6">4</td>
                 </tr>
             </table>
         </div>

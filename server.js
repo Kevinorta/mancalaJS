@@ -38,9 +38,7 @@ wss.on('connection', (ws) => {
         console.log('received: %s', message);
 
         if (message.includes("move:")) {
-
             wss.clients.forEach(function each(client) {
-
                 client.send(message);
 
             });
